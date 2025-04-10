@@ -25,6 +25,20 @@ class SinglyLinkedList {
 public:
 	SinglyLinkedList(): head(nullptr){}
 
+	int length() {
+		int count = 0;
+		Node* tmp = head;
+		while (tmp != nullptr) {
+			count++;
+			tmp = tmp->next;
+		}
+		return count;
+	}
+	
+	bool contains(int value) {
+		return search(value)!=nullptr;
+	}
+
 	void addToHead(int value) {
 		head = new Node(value,head);
 		cout << "The value (" << value << ") was added! " << endl;
@@ -62,5 +76,92 @@ public:
 		}
 	}
 
+	void removeHead() {
+		if (isEmpty()) {
+			cout << "The list is empty! " << endl;
+			return;
+		}
+		Node* tmp = head->next;
+		cout << "The first node (" << head->data << ") was removed successfully! " << endl;
+		delete(head);
+		head = tmp;
+	}
 
+	void removeTail() {
+		if (isEmpty()) {
+			cout << "The list is empty! " << endl;
+		}
+		else if (head->next==nullptr) {
+			removeHead();
+		}
+		else {
+			Node* tmp = head;
+			while (tmp->next->next != nullptr) {
+				tmp = tmp->next;
+			}
+			cout << "The last node (" << tmp->next->data << ") was removed successfully! " << endl;
+			delete(tmp->next);
+			tmp->next = nullptr;
+		}
+	}
+
+	void removeElement(int value) {
+		if (isEmpty()) {
+			cout << "The list is empty! " << endl;
+		}
+		else if (head->data == value) {
+			removeHead();
+		}
+		else {
+			Node* tmp = head;
+			while (tmp->next != nullptr && tmp->next->data != value) {
+				tmp = tmp->next;
+			}
+			if(tmp->next==nullptr) {
+				cout << "The value (" << value << ") was not found! " << endl;
+			}
+			else {
+				Node* deleteNode = tmp->next;
+				tmp->next = deleteNode->next;
+				cout << "The node with the value (" << value << ") was removed successfully! " << endl;
+				delete(deleteNode);
+			}
+		}
+	}
+
+	void removeAfterNode(int target) {
+		if (isEmpty()) {
+			cout << "The list is empty! " << endl;
+		}
+		else {
+			Node* searchNode = search(target);
+			if (searchNode == nullptr) {
+				cout << "There's no node with the value: " << target << "! " << endl;
+			}
+			else if (searchNode->next == nullptr) {
+				cout << "There's no node after (" << target << ")! " << endl;
+			}
+			else {
+				Node* deleteNode = searchNode->next;
+				searchNode->next = deleteNode->next;
+				cout << "The node with the value (" << deleteNode->data << ") after (" << target << ") was removed successfully! " << endl;
+				delete(deleteNode);
+			}
+		}
+	}
+
+	void printSLL() {
+		if (isEmpty()) {
+			cout << "The list is empty! " << endl;
+			return;
+		}
+		Node* tmp = head;
+		while (tmp != nullptr) {
+			cout << tmp->data;
+			if (tmp->next != nullptr) {
+				cout << " -> ";
+			}
+			tmp = tmp->next;
+		}
+	}
 };
