@@ -32,11 +32,19 @@ public:
 			count++;
 			tmp = tmp->next;
 		}
+		cout << "The length=" << count << endl;
 		return count;
 	}
 	
 	bool contains(int value) {
-		return search(value)!=nullptr;
+		if (search(value) != nullptr) {
+			cout << "The value (" << value << ") was found! " << endl;
+			return true;
+		}
+		else {
+			cout << "The value (" << value << ") was not found! " << endl;
+			return false;
+		}
 	}
 
 	void addToHead(int value) {
@@ -163,5 +171,6 @@ public:
 			}
 			tmp = tmp->next;
 		}
+		cout << endl;
 	}
 };
